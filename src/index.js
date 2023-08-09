@@ -1,9 +1,10 @@
 const express = require('express');
+const cors = require('cors')
 
 const { ServerConfig, Logger } = require('./config');
-const apiRoutes = require('./routes');
 const { ErrorHandler } = require('./middleware');
-const cors = require('cors')
+const apiRoutes = require('./routes');
+
 const app = express();
 
 app.use(express.json());
@@ -22,6 +23,5 @@ app.use(ErrorHandler);
 
 
 app.listen(ServerConfig.PORT, () => {
-    console.log(`Server has started in ${ServerConfig.PORT}`);
-    Logger.info("successfully started the server", "root", {})
+    Logger.info(`Server has started in ${ServerConfig.PORT}`, "root", {})
 })
