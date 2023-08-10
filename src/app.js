@@ -1,7 +1,9 @@
 const express = require('express');
 const cors = require('cors')
+const {StatusCodes} = require('http-status-codes')
 
-const { ServerConfig, Logger } = require('./config');
+const {ApiError} = require('./utils')
+
 const { ErrorHandler } = require('./middleware');
 const apiRoutes = require('./routes');
 
@@ -16,12 +18,9 @@ app.options("*", cors());
 app.use('/api', apiRoutes);
 
 app.use((req, res, next) => {
-    next(new ApiError(httpStatus.NOT_FOUND, "Not found"));
+    next(new ApiError(StatusCodes.NOT_FOUND, "Not found"));
 })
 
 app.use(ErrorHandler);
 
-
-app.listen(ServerConfig.PORT, () => {
-    Logger.info(`Server has started in ${ServerConfig.PORT}`, "root", {})
-})
+module.exports = app;
